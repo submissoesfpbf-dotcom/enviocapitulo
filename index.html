@@ -118,8 +118,8 @@ button:disabled{opacity:.6;cursor:wait}
 <body>
 <div class="topline"></div>
 <header class="site-header"><div class="header-inner">
-  <div class="brand"><div class="brand-mark">III</div><div><div class="brand-name">FPBF Editorial</div><div class="brand-sub">CENTRO DE FORMAÇÃO DE PROFESSORES · UFCG</div></div></div>
-  <div class="header-right"><span class="header-note">EDIÇÃO CIENTÍFICA · 2026</span><span class="header-pill">Portal de submissões</span></div>
+  <div class="brand"><div class="brand-mark">III</div><div><div class="brand-name">FPBF Editorial</div><div class="brand-sub"></div></div></div>
+  <div class="header-right"><span class="header-note"></span><span class="header-pill">Portal de submissões</span></div>
 </div></header>
 <main class="page">
 <aside class="editorial-side">
@@ -127,21 +127,17 @@ button:disabled{opacity:.6;cursor:wait}
     <div class="cover-kicker">III FÓRUM PARAIBANO DE FÍSICA</div>
     <div class="cover-main">
       <div class="cover-volume">VOLUME EDITORIAL / 2026</div>
-      <h1>O prazer de<br><em>descobrir.</em></h1>
+      <h1>O prazer de<br><em>descobrir:</em></h1>
       <div class="cover-sub">Interfaces da Física na Paraíba</div>
       <div class="cover-rule"></div>
     </div>
     <div class="cover-bottom"><span>CIÊNCIA · EDUCAÇÃO · PESQUISA</span><span>CFP / UFCG</span></div>
   </div>
   <div class="side-caption">
-    <div class="eyebrow">SOBRE A CONVOCAÇÃO</div>
-    <h2>Da pesquisa à publicação.</h2>
-    <p>Um espaço dedicado ao recebimento, acompanhamento e aprimoramento dos capítulos selecionados para a obra coletiva.</p>
-    <div class="side-features"><div class="side-feature"><span class="feature-icon">▤</span>Envio em formato Word</div><div class="side-feature"><span class="feature-icon">◷</span>Acompanhamento online</div></div>
-  </div>
+  
 </aside>
 <div class="form-area">
-  <div class="form-top"><span class="form-eyebrow">PORTAL DE AUTORES</span><span class="step-count">III FPBF · 2026</span></div>
+ 
   <div class="form-shell">
     <nav class="tabs" aria-label="Etapas do portal">
       <button id="tab-enviar" class="tab active" type="button" onclick="aba('enviar')" aria-controls="panel-enviar" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M12 16V3m0 0-5 5m5-5 5 5M4 15v5h16v-5"/></svg>Enviar capítulo</button>
@@ -158,7 +154,7 @@ button:disabled{opacity:.6;cursor:wait}
           <input id="titulo" maxlength="250" required placeholder="Digite o título completo do trabalho">
         </div>
         <div class="form-section"><div class="form-section-header"><span class="section-number">02</span><span class="form-section-title">Autoria e contato</span></div>
-          <p class="hint">Cadastre cada autor com seu e-mail. O endereço responsável deve pertencer a um desses autores.</p>
+          <p class="hint">Informe o nome e o e-mail de cada autor. O e-mail do responsável (contato principal) deve ser o de um dos autores cadastrados.</p>
           <div id="autores"></div><button class="secondary" type="button" id="add" onclick="adicionarAutor()">＋ Adicionar outro autor</button>
           <label for="responsavel">E-mail responsável pelo acompanhamento <span class="required">*</span></label>
           <input id="responsavel" type="email" required placeholder="autor@exemplo.com" autocomplete="email">
@@ -175,7 +171,6 @@ button:disabled{opacity:.6;cursor:wait}
     <section class="panel" id="panel-consultar">
       <div class="section-kicker">ÁREA DE ACOMPANHAMENTO</div><h2>Acompanhe seu capítulo.</h2>
       <p class="panel-lead">Consulte o andamento editorial e, quando autorizado, envie uma versão corrigida.</p>
-      <div class="track-steps"><div class="track-step"><span class="symbol">▤</span><strong>Recebimento</strong></div><div class="track-step"><span class="symbol">◷</span><strong>Avaliação</strong></div><div class="track-step"><span class="symbol">✓</span><strong>Decisão editorial</strong></div></div>
       <p class="hint">Use o código recebido na confirmação e o e-mail responsável cadastrado no envio.</p>
       <form id="form-consulta">
         <label for="codigo">Código de acompanhamento <span class="required">*</span></label><input id="codigo" placeholder="CAP-0001" required autocomplete="off">
@@ -196,7 +191,7 @@ button:disabled{opacity:.6;cursor:wait}
 <script>
 /* SUBSTITUA PELA URL /exec DO NOVO DEPLOY. NUNCA USE A URL DO FORMULÁRIO ANTIGO. */
 const API_URL='https://script.google.com/macros/s/AKfycbz39_mMH5MjYog0rq7Iq3sriIOKq087aAIAIPQ_9evfSrxxd5mswwAtFfJkmxK3TNH3/exec';
-const MAX_MB=5,MAX_AUTORES=12;
+const MAX_MB=5,MAX_AUTORES=6;
 let reqId=null,enviando=false;
 function $(id){return document.getElementById(id)}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','"':'&quot;',"'":'&#39;'}[c]))}
