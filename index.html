@@ -1,52 +1,198 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>III FPBF | Submissão de capítulos</title>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#211b27">
+<title>Submissão de capítulos | O prazer de descobrir — III FPBF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
-:root{--wine:#821e30;--wine2:#a72c42;--bg:#f5f3f4;--line:#e5dfe1;--ink:#242329;--muted:#6c6569}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px Arial,Helvetica,sans-serif;color:var(--ink)}
-.shell{max-width:840px;margin:30px auto;padding:0 14px}.hero{background:linear-gradient(135deg,#621625,#9b263b);padding:36px 28px;color:#fff;text-align:center;border-radius:14px 14px 0 0}
-.hero small{letter-spacing:2px;color:#f0cdd6}.hero h1{font-size:28px;margin:12px 0}.hero p{margin:6px 0;color:#f3dce1}
-.card{background:white;border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;box-shadow:0 10px 28px #0001;overflow:hidden}
-.tabs{display:grid;grid-template-columns:1fr 1fr;background:#f7f4f5}.tab{border:0;padding:18px;background:transparent;font-weight:bold;cursor:pointer;color:var(--ink)}.tab.active{background:var(--wine);color:white}
-.panel{padding:28px;display:none}.panel.active{display:block}h2{font-size:22px;color:var(--wine);margin:0 0 12px}
-.notice{background:#fbf2f4;border-left:4px solid var(--wine);padding:14px;border-radius:7px;margin:18px 0;line-height:1.6}
-label{font-weight:bold;display:block;margin:18px 0 7px}input,textarea{width:100%;border:1px solid #d7cdd1;border-radius:8px;padding:12px;font:inherit;background:white}input:focus{outline:2px solid #e9b8c2}
-.author{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;margin:9px 0}.author label{font-size:12px;margin:0 0 6px}.author button{height:44px}
-button{cursor:pointer;border:0;border-radius:8px;padding:12px 16px;font-weight:bold}.primary{background:var(--wine);color:#fff}.secondary{background:#f1e8eb;color:var(--wine);border:1px solid #dcc5cc}.danger{background:#fff0f0;color:#9c2634}
-button:disabled{opacity:.55;cursor:wait}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-small,.hint{color:var(--muted);font-size:13px;line-height:1.6}.msg{display:none;margin:20px 0;padding:15px;border-radius:8px;line-height:1.5;white-space:pre-wrap}.msg.show{display:block}.msg.ok{background:#e9f6ed;color:#205e36}.msg.err{background:#fff0f0;color:#8b2222}.msg.info{background:#eef3fb;color:#234e80}
-.result{display:none;background:#faf7f8;border:1px solid var(--line);border-radius:10px;padding:20px;margin-top:20px;line-height:1.8}.result.show{display:block}
-.result strong.code{font-size:22px;color:var(--wine)}.file{border:1px dashed #bdaeb3;border-radius:9px;padding:14px;background:#faf9f9}
-footer{text-align:center;color:var(--muted);font-size:12px;margin:20px}
-@media(max-width:620px){.author{grid-template-columns:1fr}.panel{padding:18px}.hero h1{font-size:23px}}
-</style></head><body><div class="shell">
-<header class="hero"><small>UFCG · CFP · III FPBF</small><h1>Submissão de capítulos</h1>
-<p>O prazer de descobrir: interfaces da Física na Paraíba</p><p>Convocação editorial dos trabalhos selecionados</p></header>
-<div class="card"><nav class="tabs"><button id="tab-enviar" class="tab active" type="button" onclick="aba('enviar')">Enviar capítulo</button>
-<button id="tab-consultar" class="tab" type="button" onclick="aba('consultar')">Acompanhar submissão</button></nav>
-<section class="panel active" id="panel-enviar"><h2>Envio da primeira versão</h2>
-<div class="notice"><strong>Prazo final: 30 de novembro de 2026, às 23h59 (horário de Brasília).</strong><br>Envie o capítulo conforme o modelo e as normas editoriais. A publicação definitiva depende de avaliação.</div>
-<div id="periodo" class="msg info show">Verificando o período de submissão…</div>
-<form id="form-envio">
-<label for="titulo">Título do trabalho selecionado *</label><input id="titulo" maxlength="250" required placeholder="Título completo do trabalho">
-<label>Autores e respectivos e-mails *</label><div class="hint">Cadastre cada autor com seu e-mail. O endereço responsável deve pertencer a um desses autores.</div>
-<div id="autores"></div><button class="secondary" type="button" id="add" onclick="adicionarAutor()">+ Adicionar autor</button>
-<label for="responsavel">E-mail responsável pelo acompanhamento *</label><input id="responsavel" type="email" required placeholder="autor@exemplo.com">
-<div class="hint">O código de acompanhamento será enviado para este endereço.</div>
-<label for="arquivo">Arquivo do capítulo (.docx, até 5 MB) *</label><div class="file"><input type="file" id="arquivo" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required></div>
-<div class="actions"><button class="primary" id="btnEnviar" type="submit">Enviar capítulo</button></div></form>
-<div id="msg-envio" class="msg"></div><div id="res-envio" class="result"></div>
-</section>
-<section class="panel" id="panel-consultar"><h2>Acompanhar submissão</h2>
-<p class="hint">Use o código recebido na confirmação e o e-mail responsável cadastrado no envio.</p>
-<form id="form-consulta"><label for="codigo">Código de acompanhamento *</label><input id="codigo" placeholder="CAP-0001" required>
-<label for="email-consulta">E-mail responsável *</label><input id="email-consulta" type="email" required>
-<div class="actions"><button class="primary" id="btnConsulta" type="submit">Consultar</button></div></form>
-<div id="msg-consulta" class="msg"></div><div id="res-consulta" class="result"></div>
-<div id="v2" style="display:none"><h2 style="margin-top:24px">Enviar versão corrigida</h2>
-<p class="hint">Disponível apenas quando a organização autorizar correções.</p>
-<input type="file" id="arquivo-v2" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-<div class="actions"><button class="primary" type="button" id="btnV2" onclick="enviarV2()">Enviar segunda versão</button></div><div id="msg-v2" class="msg"></div></div>
-</section></div><footer>III Fórum Paraibano de Física · Centro de Formação de Professores · UFCG</footer></div>
+:root{--ink:#28232b;--muted:#79727c;--line:#eae5e7;--wine:#81243c;--rose:#efb6c5;--paper:#f7f6f4;--white:#fff;--dark:#211b27;--sans:'DM Sans',Arial,sans-serif;--serif:'Source Serif 4',Georgia,serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--paper);font:14px/1.6 var(--sans)}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #b56c88;outline-offset:3px}
+a{color:var(--wine)}
+.topline{height:5px;background:linear-gradient(90deg,#49202e,#a14662,#d1a0ad)}
+.site-header{background:#fff;border-bottom:1px solid var(--line)}
+.header-inner{max-width:1320px;margin:auto;padding:19px 38px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:13px;text-decoration:none;color:inherit}
+.brand-mark{width:43px;height:43px;border-radius:12px;background:var(--dark);color:#efb6c5;font:600 21px var(--serif);display:grid;place-items:center}
+.brand-name{font:700 18px/1.1 var(--serif);letter-spacing:-.04em}
+.brand-sub{font-size:10px;letter-spacing:.12em;font-weight:800;color:#9d8c96;margin-top:5px}
+.header-right{display:flex;align-items:center;gap:18px}
+.header-note{font-size:11px;color:#807985;font-weight:700;letter-spacing:.08em}
+.header-pill{border:1px solid #eadbe0;background:#fbf3f5;border-radius:99px;padding:8px 12px;color:#7e3047;font-size:11px;font-weight:800}
+.header-pill:before{content:'';display:inline-block;width:7px;height:7px;background:#55a57d;border-radius:50%;margin-right:7px}
+.page{max-width:1320px;margin:0 auto;padding:38px 38px 65px;display:grid;grid-template-columns:minmax(0,.83fr) minmax(0,1.17fr);gap:36px;align-items:start}
+.editorial-side{position:sticky;top:28px;min-width:0}
+.cover{min-height:545px;border-radius:22px;background:linear-gradient(145deg,#211b27,#3d2636);color:#fff;padding:38px 39px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;isolation:isolate}
+.cover:before{content:'';position:absolute;z-index:-1;width:500px;height:500px;right:-270px;top:90px;border:1px solid #e6b8c23b;border-radius:50%;box-shadow:0 0 0 58px #ffffff06,0 0 0 116px #ffffff04}
+.cover:after{content:'';position:absolute;z-index:-1;inset:0;background:radial-gradient(circle at 88% 53%,#a14c6659,transparent 44%)}
+.cover-kicker{display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.19em;font-weight:800;color:#d4adbb}
+.cover-kicker:before{content:'';height:1px;width:27px;background:#c68aa0}
+.cover-volume{font:500 13px var(--serif);letter-spacing:.2em;color:#d3acb8;margin-bottom:20px}
+.cover h1{font:500 clamp(49px,5vw,80px)/1.05 var(--serif);letter-spacing:-.065em;margin:0 0 19px}
+.cover h1 em{font-weight:500;color:var(--rose)}
+.cover-sub{font:500 21px/1.35 var(--serif);color:#e3c9d2;max-width:340px}
+.cover-rule{height:1px;width:70px;background:#b77990;margin:25px 0}
+.cover-bottom{display:flex;justify-content:space-between;gap:15px;font-size:10px;font-weight:800;letter-spacing:.13em;color:#c4b0bd}
+.side-caption{padding:22px 7px 0}
+.side-caption .eyebrow{font-size:10px;letter-spacing:.16em;font-weight:800;color:#a76c80}
+.side-caption h2{font:600 23px var(--serif);margin:7px 0 8px;letter-spacing:-.04em}
+.side-caption p{color:#817983;font-size:12px;line-height:1.8;margin:0;max-width:420px}
+.side-features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.side-feature{border:1px solid #e9e3e6;border-radius:12px;background:#fff;padding:13px;display:flex;gap:9px;align-items:center;font-size:11px;font-weight:700;color:#665c66}
+.feature-icon{width:29px;height:29px;display:grid;place-items:center;border-radius:8px;background:#f7edf0;color:#9a4b65;font-size:17px;flex-shrink:0}
+.form-area{min-width:0}
+.form-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}
+.form-eyebrow{font-size:10px;font-weight:800;letter-spacing:.15em;color:#9d7b88}
+.step-count{font-size:11px;color:#8d828b}
+.form-shell{background:#fff;border:1px solid #eae4e7;border-radius:20px;box-shadow:0 15px 45px #2a172008;overflow:hidden}
+.tabs{display:flex;gap:7px;padding:12px;border-bottom:1px solid #eee9ec;background:#fff}
+.tab{flex:1;border:0;border-radius:10px;background:transparent;padding:13px 10px;color:#8a7e86;font-size:12px;font-weight:800;display:flex;justify-content:center;align-items:center;gap:9px}
+.tab.active{background:#f7eef1;color:#81243c}
+.tab:hover:not(.active){background:#faf8f9;color:#5f4955}
+.tab svg{width:17px;height:17px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.panel{display:none;padding:33px 35px 37px}
+.panel.active{display:block;animation:appear .2s ease}
+@keyframes appear{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.section-kicker{font-size:10px;letter-spacing:.17em;color:#a56e81;font-weight:800;margin-bottom:8px}
+.panel h2{font:650 31px/1.2 var(--serif);letter-spacing:-.045em;margin:0 0 8px;color:#2a242b}
+.panel-lead{font-size:12px;line-height:1.75;color:#89818a;margin:0 0 25px}
+.notice{display:flex;align-items:flex-start;gap:13px;background:#f8f1f3;border:1px solid #efdee3;border-radius:12px;padding:15px;margin:18px 0 16px;font-size:12px;color:#67515c;line-height:1.7}
+.notice-icon{display:grid;place-items:center;width:33px;height:33px;border-radius:9px;background:#ead4dc;color:#88364f;font-size:18px;flex-shrink:0}
+.notice strong{color:#5b2739}
+.form-section{border-top:1px solid #f0ecee;padding-top:24px;margin-top:26px}
+.form-section-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.section-number{width:28px;height:28px;border-radius:9px;background:#f4e8ec;color:#923c56;display:grid;place-items:center;font-size:11px;font-weight:800}
+.form-section-title{font:650 19px var(--serif);letter-spacing:-.035em}
+label{font-size:12px;font-weight:800;color:#48404a;display:block;margin:17px 0 7px}
+.required{color:#b6415c}
+input:not([type=file]),textarea{width:100%;background:#fdfcfc;border:1px solid #e3dce0;border-radius:10px;padding:13px 14px;color:#29232b;font-size:13px;transition:border-color .16s,box-shadow .16s}
+input:not([type=file]):focus{border-color:#b66a83;outline:0;box-shadow:0 0 0 3px #b66a831b}
+input::placeholder{color:#b1a8af}
+.hint{font-size:11px;color:#8a818a;line-height:1.7;margin-top:7px}
+.author{display:grid;grid-template-columns:1fr 1fr 38px;gap:10px;align-items:end;padding:13px 13px 15px;margin:10px 0;background:#faf9f9;border:1px solid #eee9ec;border-radius:12px}
+.author label{font-size:10px;margin:0 0 6px;color:#736773}
+.author input:not([type=file]){background:#fff;padding:11px}
+.author .danger{height:42px;width:38px;padding:0;display:grid;place-items:center;border-radius:9px}
+.author:before{content:'AUTORIA';grid-column:1/-1;color:#a79ba4;letter-spacing:.15em;font-size:9px;font-weight:800;margin-bottom:-4px}
+button{border:0;border-radius:10px;padding:12px 16px;font-weight:800}
+.primary{background:linear-gradient(110deg,#81243c,#a23955);color:#fff;box-shadow:0 5px 15px #81243c21;min-height:46px}
+.primary:hover{background:linear-gradient(110deg,#67192f,#852c47)}
+.secondary{background:#f8eef1;color:#82334d;border:1px solid #ebdbe1;font-size:12px}
+.secondary:hover{background:#f0e0e6}
+.danger{background:#f7e9eb;color:#aa3e52;font-size:20px}
+button:disabled{opacity:.6;cursor:wait}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.actions .primary{flex:1}
+.file{border:1.5px dashed #d9c5cd;background:#fcf9fa;border-radius:13px;padding:18px 16px;transition:border-color .2s,background .2s}
+.file:hover,.file:focus-within{border-color:#9b5771;background:#fcf5f7}
+.file:before{content:'⇧';display:grid;place-items:center;margin:0 auto 9px;width:40px;height:40px;background:#f2e4e9;border-radius:12px;font-size:24px;color:#944a63}
+.file input{width:100%;font-size:11px;color:#6e6069}
+.file input::file-selector-button{border:1px solid #e2d1d8;border-radius:8px;background:#fff;color:#84384f;padding:10px 12px;margin-right:12px;font-weight:700;cursor:pointer}
+.file-hint{text-align:center;font-size:10px;color:#988d97;margin-top:10px}
+.msg{display:none;margin:16px 0;padding:13px 15px;border-radius:10px;font-size:12px;line-height:1.65;white-space:pre-wrap}
+.msg.show{display:block}.msg.ok{background:#eaf6ee;color:#206a43}.msg.err{background:#fff0f0;color:#992d38}.msg.info{background:#eff3fa;color:#41638e}
+.result{display:none;background:#faf8f9;border:1px solid #e9dfe3;border-radius:13px;padding:20px;margin-top:20px;line-height:2;font-size:12px;overflow-wrap:anywhere}
+.result.show{display:block}.result strong.code{font:700 25px var(--serif);color:#81243c}
+.track-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 26px}
+.track-step{border:1px solid #ece6e9;border-radius:12px;padding:14px 10px;text-align:center;background:#fbfafb}
+.track-step .symbol{font-size:23px;color:#a14e69;display:block}
+.track-step strong{font-size:10px;color:#655961;display:block;margin-top:4px}
+#v2{border-top:1px solid #eee8eb;margin-top:26px;padding-top:24px}
+#v2 h2{font-size:24px}
+.site-footer{max-width:1320px;margin:0 auto;padding:0 38px 35px;display:flex;justify-content:space-between;gap:18px;font-size:11px;color:#918790}
+.site-footer span:last-child{font-weight:800;letter-spacing:.09em}
+@media(max-width:1060px){.page{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:22px;padding:25px}.cover{padding:30px;min-height:480px}.cover h1{font-size:54px}.panel{padding:27px}.header-inner{padding:16px 25px}}
+@media(max-width:820px){.page{grid-template-columns:1fr;max-width:740px}.editorial-side{position:static}.cover{min-height:300px}.cover h1{font-size:57px}.side-caption{display:none}.header-note{display:none}.site-footer{padding:0 25px 30px}}
+@media(max-width:540px){.header-inner{padding:13px 16px}.brand-name{font-size:16px}.brand-mark{width:36px;height:36px}.header-pill{font-size:9px;padding:6px 9px}.page{padding:15px;gap:15px}.cover{min-height:265px;padding:23px;border-radius:15px}.cover h1{font-size:47px;margin:9px 0}.cover-volume{margin-bottom:9px}.cover-sub{font-size:17px}.cover-rule{margin:15px 0}.cover-bottom{font-size:8px}.panel{padding:24px 18px}.panel h2{font-size:27px}.tab{font-size:11px;padding:12px 5px}.author{grid-template-columns:1fr 38px}.author>div:nth-child(1){grid-column:1/-1}.author>div:nth-child(2){grid-column:1}.author button{grid-column:2}.track-steps{gap:5px}.track-step{padding:10px 4px}.site-footer{display:block;padding:0 16px 24px}.site-footer span{display:block;margin-bottom:6px}}
+@media(prefers-reduced-motion:reduce){.panel.active{animation:none}}
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<header class="site-header"><div class="header-inner">
+  <div class="brand"><div class="brand-mark">III</div><div><div class="brand-name">FPBF Editorial</div><div class="brand-sub">CENTRO DE FORMAÇÃO DE PROFESSORES · UFCG</div></div></div>
+  <div class="header-right"><span class="header-note">EDIÇÃO CIENTÍFICA · 2026</span><span class="header-pill">Portal de submissões</span></div>
+</div></header>
+<main class="page">
+<aside class="editorial-side">
+  <div class="cover">
+    <div class="cover-kicker">III FÓRUM PARAIBANO DE FÍSICA</div>
+    <div class="cover-main">
+      <div class="cover-volume">VOLUME EDITORIAL / 2026</div>
+      <h1>O prazer de<br><em>descobrir.</em></h1>
+      <div class="cover-sub">Interfaces da Física na Paraíba</div>
+      <div class="cover-rule"></div>
+    </div>
+    <div class="cover-bottom"><span>CIÊNCIA · EDUCAÇÃO · PESQUISA</span><span>CFP / UFCG</span></div>
+  </div>
+  <div class="side-caption">
+    <div class="eyebrow">SOBRE A CONVOCAÇÃO</div>
+    <h2>Da pesquisa à publicação.</h2>
+    <p>Um espaço dedicado ao recebimento, acompanhamento e aprimoramento dos capítulos selecionados para a obra coletiva.</p>
+    <div class="side-features"><div class="side-feature"><span class="feature-icon">▤</span>Envio em formato Word</div><div class="side-feature"><span class="feature-icon">◷</span>Acompanhamento online</div></div>
+  </div>
+</aside>
+<div class="form-area">
+  <div class="form-top"><span class="form-eyebrow">PORTAL DE AUTORES</span><span class="step-count">III FPBF · 2026</span></div>
+  <div class="form-shell">
+    <nav class="tabs" aria-label="Etapas do portal">
+      <button id="tab-enviar" class="tab active" type="button" onclick="aba('enviar')" aria-controls="panel-enviar" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M12 16V3m0 0-5 5m5-5 5 5M4 15v5h16v-5"/></svg>Enviar capítulo</button>
+      <button id="tab-consultar" class="tab" type="button" onclick="aba('consultar')" aria-controls="panel-consultar" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>Acompanhar submissão</button>
+    </nav>
+    <section class="panel active" id="panel-enviar">
+      <div class="section-kicker">ETAPA DE SUBMISSÃO</div><h2>Envie seu capítulo.</h2>
+      <p class="panel-lead">Preencha os dados com atenção e anexe a versão original do capítulo para análise editorial.</p>
+      <div class="notice"><span class="notice-icon">◷</span><div><strong>Prazo final: 30 de novembro de 2026, às 23h59 (horário de Brasília).</strong><br>Envie o capítulo conforme o modelo e as normas editoriais. A publicação definitiva depende de avaliação.</div></div>
+      <div id="periodo" class="msg info show">Verificando o período de submissão…</div>
+      <form id="form-envio">
+        <div class="form-section"><div class="form-section-header"><span class="section-number">01</span><span class="form-section-title">Identificação do capítulo</span></div>
+          <label for="titulo">Título do trabalho selecionado <span class="required">*</span></label>
+          <input id="titulo" maxlength="250" required placeholder="Digite o título completo do trabalho">
+        </div>
+        <div class="form-section"><div class="form-section-header"><span class="section-number">02</span><span class="form-section-title">Autoria e contato</span></div>
+          <p class="hint">Cadastre cada autor com seu e-mail. O endereço responsável deve pertencer a um desses autores.</p>
+          <div id="autores"></div><button class="secondary" type="button" id="add" onclick="adicionarAutor()">＋ Adicionar outro autor</button>
+          <label for="responsavel">E-mail responsável pelo acompanhamento <span class="required">*</span></label>
+          <input id="responsavel" type="email" required placeholder="autor@exemplo.com" autocomplete="email">
+          <p class="hint">O código de acompanhamento será enviado para este endereço.</p>
+        </div>
+        <div class="form-section"><div class="form-section-header"><span class="section-number">03</span><span class="form-section-title">Documento para avaliação</span></div>
+          <label for="arquivo">Arquivo do capítulo (.docx, até 5 MB) <span class="required">*</span></label>
+          <div class="file"><input type="file" id="arquivo" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required><div class="file-hint">Formato .docx · Tamanho máximo de 5 MB</div></div>
+        </div>
+        <div class="actions"><button class="primary" id="btnEnviar" type="submit">Enviar capítulo para avaliação &nbsp; ↗</button></div>
+      </form>
+      <div id="msg-envio" class="msg" role="status" aria-live="polite"></div><div id="res-envio" class="result" aria-live="polite"></div>
+    </section>
+    <section class="panel" id="panel-consultar">
+      <div class="section-kicker">ÁREA DE ACOMPANHAMENTO</div><h2>Acompanhe seu capítulo.</h2>
+      <p class="panel-lead">Consulte o andamento editorial e, quando autorizado, envie uma versão corrigida.</p>
+      <div class="track-steps"><div class="track-step"><span class="symbol">▤</span><strong>Recebimento</strong></div><div class="track-step"><span class="symbol">◷</span><strong>Avaliação</strong></div><div class="track-step"><span class="symbol">✓</span><strong>Decisão editorial</strong></div></div>
+      <p class="hint">Use o código recebido na confirmação e o e-mail responsável cadastrado no envio.</p>
+      <form id="form-consulta">
+        <label for="codigo">Código de acompanhamento <span class="required">*</span></label><input id="codigo" placeholder="CAP-0001" required autocomplete="off">
+        <label for="email-consulta">E-mail responsável <span class="required">*</span></label><input id="email-consulta" type="email" required placeholder="autor@exemplo.com" autocomplete="email">
+        <div class="actions"><button class="primary" id="btnConsulta" type="submit">Consultar andamento &nbsp; →</button></div>
+      </form>
+      <div id="msg-consulta" class="msg" role="status" aria-live="polite"></div><div id="res-consulta" class="result" aria-live="polite"></div>
+      <div id="v2" style="display:none"><h2>Enviar versão corrigida</h2><p class="hint">Disponível apenas quando a organização autorizar correções.</p>
+        <div class="file"><input type="file" id="arquivo-v2" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"><div class="file-hint">Arquivo .docx · até 5 MB</div></div>
+        <div class="actions"><button class="primary" type="button" id="btnV2" onclick="enviarV2()">Enviar segunda versão &nbsp; ↗</button></div>
+        <div id="msg-v2" class="msg" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+  </div>
+</div>
+</main>
+<footer class="site-footer"><span>III Fórum Paraibano de Física · Centro de Formação de Professores · UFCG</span><span>O PRAZER DE DESCOBRIR · 2026</span></footer>
 <script>
 /* SUBSTITUA PELA URL /exec DO NOVO DEPLOY. NUNCA USE A URL DO FORMULÁRIO ANTIGO. */
 const API_URL='https://script.google.com/macros/s/AKfycbz39_mMH5MjYog0rq7Iq3sriIOKq087aAIAIPQ_9evfSrxxd5mswwAtFfJkmxK3TNH3/exec';
