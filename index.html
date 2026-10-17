@@ -411,9 +411,14 @@ input::placeholder { color: #aaa1a9; }
   transition: all 0.2s ease;
 }
 
-.author .danger:hover {
+.author .danger:hover:not(:disabled) {
   background: #f9e2e6;
   border-color: #eaacb9;
+}
+
+.author .danger:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 /* Buttons */
@@ -430,7 +435,7 @@ button.primary {
   width: 100%;
 }
 
-button.primary:hover {
+button.primary:hover:not(:disabled) {
   background: var(--wine-hover);
   transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(114, 32, 53, 0.3);
@@ -452,15 +457,16 @@ button.secondary {
   margin-top: 8px;
 }
 
-button.secondary:hover {
+button.secondary:hover:not(:disabled) {
   background: #f4e3e8;
   border-color: #e5c2cc;
 }
 
 button:disabled {
-  opacity: 0.65;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none !important;
+  box-shadow: none !important;
 }
 
 .actions {
@@ -782,19 +788,41 @@ const API_URL='https://script.google.com/macros/s/AKfycbwher7ABcC1ihabQYO38NjOVE
 const MAX_MB=5,MAX_AUTORES=6;
 let reqId=null,enviando=false;
 function $(id){return document.getElementById(id)}
-function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','"':'&quot;',"'":'&#39;'}[c]))}
 function aba(id){for(const name of ['enviar','consultar']){$('panel-'+name).classList.toggle('active',name===id);$('tab-'+name).classList.toggle('active',name===id)}}
 function mensagem(id,kind,msg){const e=$(id);e.className='msg show '+kind;e.textContent=msg}
 function ocultar(id){$(id).className='msg'}
+
+function atualizarEstadoAutores(){
+  const linhas = document.querySelectorAll('.author');
+  const qtd = linhas.length;
+  
+  // Desativa o botão de adicionar se atingiu o máximo
+  $('add').disabled = (qtd >= MAX_AUTORES);
+  
+  // Desativa os botões de remover se há apenas 1 autor (mínimo exigido)
+  linhas.forEach(row => {
+    const btnRemover = row.querySelector('.danger');
+    if(btnRemover) btnRemover.disabled = (qtd <= 1);
+  });
+}
+
 function adicionarAutor(nome='',email=''){
-  if(document.querySelectorAll('.author').length>=MAX_AUTORES)return alert('Limite de '+MAX_AUTORES+' autores.');
+  if(document.querySelectorAll('.author').length >= MAX_AUTORES) return;
   const row=document.createElement('div');row.className='author';
   row.innerHTML='<div><label>Nome completo</label><input class="nome" maxlength="150" required placeholder="Nome do autor"></div>'+
     '<div><label>E-mail</label><input class="email" type="email" required placeholder="autor@exemplo.com"></div>'+
     '<button type="button" class="danger" title="Remover autor" onclick="removerAutor(this)">×</button>';
   $('autores').appendChild(row);row.querySelector('.nome').value=nome;row.querySelector('.email').value=email;
+  atualizarEstadoAutores();
 }
-function removerAutor(b){if(document.querySelectorAll('.author').length<=1)return alert('É necessário pelo menos um autor.');b.closest('.author').remove()}
+
+function removerAutor(b){
+  if(document.querySelectorAll('.author').length <= 1) return;
+  b.closest('.author').remove();
+  atualizarEstadoAutores();
+}
+
 function arquivoValido(f){if(!f||!f.name.toLowerCase().endsWith('.docx'))throw Error('Selecione um arquivo .docx.');if(f.size>MAX_MB*1024*1024)throw Error('O arquivo excede '+MAX_MB+' MB.')}
 function base64(f){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result).split(',')[1]);r.onerror=()=>reject(Error('Não foi possível ler o arquivo.'));r.readAsDataURL(f)})}
 function uuid(){return crypto.randomUUID?crypto.randomUUID().replace(/-/g,''):Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2)}
